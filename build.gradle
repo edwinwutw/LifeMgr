@@ -15,6 +15,17 @@ buildscript {
     }
 }
 
+ext {
+    _compileSdkVersion = 26
+
+    arch_version = "1.0.0"
+    support_version = "26.1.0"
+    constraint_layout_version = "1.0.2"
+    junit_version = "4.12"
+    support_test_version = "1.0.1"
+    test_espresso_version = "3.0.1"
+}
+
 allprojects {
     repositories {
         google()
