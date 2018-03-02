@@ -32,7 +32,7 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.contact_item_list, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.contact_list_content, parent, false);
         view.setFocusable(true);
         return new ViewHolder(view);
     }
@@ -41,8 +41,10 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         ContactEntry contact = mContactList.get(position);
         //viewHolder.listContactAvatar.setImageDrawable(null);
-        viewHolder.listContactTitle.setText("title");
-        viewHolder.listContactInfo.setText("description");
+        viewHolder.listContactTitle.setText(mContactList.get(position).getEmail());
+        viewHolder.listContactInfo.setText(mContactList.get(position).getInfo());
+
+        viewHolder.itemView.setTag(mContactList.get(position));
     }
 
     @Override
@@ -64,7 +66,7 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
      * The interface that receives onItemClick messages.
      */
     public interface ContactListAdapterOnItemClickHandler {
-        void onItemClick(Date date);
+        void onItemClick(int id);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -85,8 +87,8 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            //Date date = mContactList.get(adapterPosition).getDate();
-            //mClickHandler.onItemClick(date);
+            int id = mContactList.get(adapterPosition).getId();
+            mClickHandler.onItemClick(id);
         }
     }
 }

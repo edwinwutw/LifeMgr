@@ -90,6 +90,11 @@ public class ContactRepository {
         return mContactDao.getContactList();
     }
 
+    public LiveData<ContactEntry> getContact(int contactID) {
+        initializeData();
+        return mContactDao.getContact(contactID);
+    }
+
     private void deleteOldData() {
         mContactDao.deleteContact("email");
     }

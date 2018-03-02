@@ -22,6 +22,7 @@ import com.mvstar.edwinwu.lifemgr.AppExecutors;
 import com.mvstar.edwinwu.lifemgr.data.ContactRepository;
 import com.mvstar.edwinwu.lifemgr.data.database.ContactDatabase;
 import com.mvstar.edwinwu.lifemgr.data.network.ContactNetworkDataSource;
+import com.mvstar.edwinwu.lifemgr.ui.contact.detail.ContactDetailViewModelFactory;
 import com.mvstar.edwinwu.lifemgr.ui.contact.list.ContactListViewModelFactory;
 
 /**
@@ -45,10 +46,10 @@ public class InjectorUtils {
         return ContactNetworkDataSource.getInstance(context.getApplicationContext(), executors);
     }
 
-//    public static DetailViewModelFactory provideDetailViewModelFactory(Context context, Date date) {
-//        SunshineRepository repository = provideRepository(context.getApplicationContext());
-//        return new DetailViewModelFactory(repository, date);
-//    }
+    public static ContactDetailViewModelFactory provideDetailViewModelFactory(Context context, int contactID) {
+        ContactRepository repository = provideRepository(context.getApplicationContext());
+        return new ContactDetailViewModelFactory(repository, contactID);
+    }
 
     public static ContactListViewModelFactory provideContactListViewModelFactory(Context context) {
         ContactRepository repository = provideRepository(context.getApplicationContext());

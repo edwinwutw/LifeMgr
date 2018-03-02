@@ -14,29 +14,15 @@ import java.util.List;
  */
 @Dao
 public interface ContactDao {
-   /**
-    * Gets the contact for a email
-    *
-    * @return {@link LiveData} with contact list
-    */
    @Query("SELECT * FROM contact")
    LiveData<List<ContactEntry>> getContactList();
 
-   /**
-    * Inserts a list of {@link ContactEntry} into the contact table. If there is a conflicting id
-    * uses the {@link OnConflictStrategy} of fail to inserting. The required uniqueness of these values is defined in the {@link ContactEntry}.
-    *
-    * @param contactEntries A list of contacts to insert
-    */
+   @Query("SELECT * FROM contact WHERE id = :id")
+   LiveData<ContactEntry> getContact(int id);
+
    @Insert(onConflict = OnConflictStrategy.FAIL)
    void bulkInsert(ContactEntry... contactEntries);
 
-   /**
-    * Deletes any weather data older than the given day
-    *
-    * @param email The contact to delete by email
-    */
    @Query("DELETE FROM contact WHERE email = :email")
    void deleteContact(String email);
-
 }
