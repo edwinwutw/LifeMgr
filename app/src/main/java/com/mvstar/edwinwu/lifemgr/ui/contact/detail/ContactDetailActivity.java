@@ -1,4 +1,4 @@
-package com.mvstar.edwinwu.lifemgr.ui.contact;
+package com.mvstar.edwinwu.lifemgr.ui.contact.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.View;
 
 
 import com.mvstar.edwinwu.lifemgr.R;
+import com.mvstar.edwinwu.lifemgr.ui.contact.list.ContactListActivity;
 
 /**
  * An activity representing a single Contact detail screen. This

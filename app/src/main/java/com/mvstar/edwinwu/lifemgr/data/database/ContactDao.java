@@ -17,11 +17,10 @@ public interface ContactDao {
    /**
     * Gets the contact for a email
     *
-    * @param email The contact email you want for
-    * @return {@link LiveData} with contact
+    * @return {@link LiveData} with contact list
     */
-   @Query("SELECT * FROM contact WHERE email == :email")
-   LiveData<ContactEntry> getContactByEmail(String email);
+   @Query("SELECT * FROM contact")
+   LiveData<List<ContactEntry>> getContactList();
 
    /**
     * Inserts a list of {@link ContactEntry} into the contact table. If there is a conflicting id

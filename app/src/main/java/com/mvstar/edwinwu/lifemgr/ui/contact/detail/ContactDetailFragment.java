@@ -1,4 +1,4 @@
-package com.mvstar.edwinwu.lifemgr.ui.contact;
+package com.mvstar.edwinwu.lifemgr.ui.contact.detail;
 
 import android.app.Activity;
 import android.os.Bundle;
