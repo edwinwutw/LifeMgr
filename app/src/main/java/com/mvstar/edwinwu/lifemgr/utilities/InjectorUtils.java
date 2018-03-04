@@ -46,9 +46,9 @@ public class InjectorUtils {
         return ContactNetworkDataSource.getInstance(context.getApplicationContext(), executors);
     }
 
-    public static ContactDetailViewModelFactory provideDetailViewModelFactory(Context context, int contactID) {
+    public static ContactDetailViewModelFactory provideDetailViewModelFactory(Context context, String email) {
         ContactRepository repository = provideRepository(context.getApplicationContext());
-        return new ContactDetailViewModelFactory(repository, contactID);
+        return new ContactDetailViewModelFactory(repository, email);
     }
 
     public static ContactListViewModelFactory provideContactListViewModelFactory(Context context) {

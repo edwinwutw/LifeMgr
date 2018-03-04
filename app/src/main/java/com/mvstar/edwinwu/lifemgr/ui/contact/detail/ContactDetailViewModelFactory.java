@@ -8,16 +8,16 @@ import com.mvstar.edwinwu.lifemgr.data.ContactRepository;
 public class ContactDetailViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private final ContactRepository mRepository;
-    private final int mContactID;
+    private final String mEmail;
 
-    public ContactDetailViewModelFactory(ContactRepository repository, int contactID) {
+    public ContactDetailViewModelFactory(ContactRepository repository, String email) {
         this.mRepository = repository;
-        this.mContactID = contactID;
+        this.mEmail = email;
     }
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
         //noinspection unchecked
-        return (T) new ContactDetailViewModel(mRepository, mContactID);
+        return (T) new ContactDetailViewModel(mRepository, mEmail);
     }
 }

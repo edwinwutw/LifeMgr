@@ -14,4 +14,7 @@
     <string name="prompt_nickname">Nick Name</string>
     <string name="prompt_mobilenumber">Mobile Number</string>
     <string name="prompt_contact_info">Personal Information</string>
+
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_field_required">This field is required</string>
 </resources>

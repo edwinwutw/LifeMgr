@@ -2,9 +2,12 @@ package com.mvstar.edwinwu.lifemgr.data.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
+import android.content.ClipData;
 
 import java.util.Date;
 import java.util.List;
@@ -17,12 +20,18 @@ public interface ContactDao {
    @Query("SELECT * FROM contact")
    LiveData<List<ContactEntry>> getContactList();
 
-   @Query("SELECT * FROM contact WHERE id = :id")
-   LiveData<ContactEntry> getContact(int id);
+   @Query("SELECT * FROM contact WHERE email = :email")
+   LiveData<ContactEntry> getContact(String email);
 
    @Insert(onConflict = OnConflictStrategy.FAIL)
-   void bulkInsert(ContactEntry... contactEntries);
+   void InsertContact(ContactEntry contactEntry);
 
    @Query("DELETE FROM contact WHERE email = :email")
    void deleteContact(String email);
+
+   @Delete
+   void deleteContacts(ContactEntry... contacts);
+
+   @Update
+   void updateUsers(ContactEntry... contacts);
 }

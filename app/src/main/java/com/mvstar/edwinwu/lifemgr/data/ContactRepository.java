@@ -86,17 +86,19 @@ public class ContactRepository {
     }
 
     public LiveData<List<ContactEntry>> getContactList() {
-        initializeData();
         return mContactDao.getContactList();
     }
 
-    public LiveData<ContactEntry> getContact(int contactID) {
-        initializeData();
-        return mContactDao.getContact(contactID);
+    public LiveData<ContactEntry> getContact(String email) {
+        return mContactDao.getContact(email);
     }
 
-    private void deleteOldData() {
-        mContactDao.deleteContact("email");
+    public void insertContact(ContactEntry contactEntry) {
+        mContactDao.InsertContact(contactEntry);
+    }
+
+    public void deleteContact(String email) {
+        mContactDao.deleteContact(email);
     }
 
 //Todo

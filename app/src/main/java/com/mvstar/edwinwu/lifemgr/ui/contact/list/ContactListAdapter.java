@@ -66,7 +66,7 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
      * The interface that receives onItemClick messages.
      */
     public interface ContactListAdapterOnItemClickHandler {
-        void onItemClick(int id);
+        void onItemClick(String email);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -87,8 +87,8 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            int id = mContactList.get(adapterPosition).getId();
-            mClickHandler.onItemClick(id);
+            String email = mContactList.get(adapterPosition).getEmail();
+            mClickHandler.onItemClick(email);
         }
     }
 }

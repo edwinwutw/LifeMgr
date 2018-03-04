@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,11 +44,11 @@ public class ContactDetailFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        int contactID = -1;
+        String email = "";
         if (getArguments().containsKey(ARG_CONTACT_ID))
-            contactID = getActivity().getIntent().getIntExtra(ARG_CONTACT_ID, -1);
+            email = getActivity().getIntent().getStringExtra(ARG_CONTACT_ID);
 
-        ContactDetailViewModelFactory factory = InjectorUtils.provideDetailViewModelFactory(getActivity().getApplicationContext(), contactID);
+        ContactDetailViewModelFactory factory = InjectorUtils.provideDetailViewModelFactory(getActivity().getApplicationContext(), email);
         mViewModel = ViewModelProviders.of(this, factory).get(ContactDetailViewModel.class);
 
         mViewModel.getContact().observe(this, contactEntry -> {
@@ -72,4 +73,27 @@ public class ContactDetailFragment extends Fragment {
         String info = contactEntry.getInfo();
         mDetailBinding.contactinfo.setText(info);
     }
+
+    public void save() {
+        // Reset errors.
+        mDetailBinding.email.setError(null);
+
+        String email = mDetailBinding.email.getText().toString();
+        String nickname = mDetailBinding.nickname.getText().toString();
+        String phone = mDetailBinding.mobilenumber.getText().toString();
+        String info = mDetailBinding.contactinfo.getText().toString();
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            requestEmailFocus(getString(R.string.error_field_required));
+            return;
+        }
+        mViewModel.save(email, nickname, phone, info);
+    }
+
+    void requestEmailFocus(String error) {
+        mDetailBinding.email.setError(error);
+        mDetailBinding.email.requestFocus();
+    }
+
 }

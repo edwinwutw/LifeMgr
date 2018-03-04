@@ -102,12 +102,12 @@ public class ContactListActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onItemClick(int id) {
-        if (id <= 0) return;
+    public void onItemClick(String email) {
+        if (email == null || email.isEmpty()) return;
 
         if (mTwoPane) {
             Bundle arguments = new Bundle();
-            arguments.putInt(ContactDetailFragment.ARG_CONTACT_ID, id);
+            arguments.putString(ContactDetailFragment.ARG_CONTACT_ID, email);
             ContactDetailFragment fragment = new ContactDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -115,7 +115,7 @@ public class ContactListActivity extends AppCompatActivity implements
                     .commit();
         } else {
             Intent intent = new Intent(ContactListActivity.this, ContactDetailActivity.class);
-            intent.putExtra(ContactDetailFragment.ARG_CONTACT_ID, id);
+            intent.putExtra(ContactDetailFragment.ARG_CONTACT_ID, email);
 
             startActivity(intent);
         }
