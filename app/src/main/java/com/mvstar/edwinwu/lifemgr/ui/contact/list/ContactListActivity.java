@@ -2,6 +2,7 @@ package com.mvstar.edwinwu.lifemgr.ui.contact.list;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.mvstar.edwinwu.lifemgr.R;
+import com.mvstar.edwinwu.lifemgr.databinding.ActivityContactListBinding;
+import com.mvstar.edwinwu.lifemgr.databinding.ContactDetailBinding;
 import com.mvstar.edwinwu.lifemgr.ui.contact.detail.ContactDetailActivity;
 import com.mvstar.edwinwu.lifemgr.ui.contact.detail.ContactDetailFragment;
 import com.mvstar.edwinwu.lifemgr.utilities.InjectorUtils;
@@ -25,6 +28,7 @@ public class ContactListActivity extends AppCompatActivity implements
 
     private ContactListAdapter mContactAdapter;
     private RecyclerView mContactRecyclerview;
+    private ActivityContactListBinding mListBinding;
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -35,13 +39,11 @@ public class ContactListActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_list);
+         mListBinding = DataBindingUtil.setContentView(this, R.layout.activity_contact_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mListBinding.toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mListBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent contactDetailIntent = new Intent(ContactListActivity.this, ContactDetailActivity.class);
@@ -58,7 +60,7 @@ public class ContactListActivity extends AppCompatActivity implements
             mTwoPane = true;
         }
 
-        mContactRecyclerview = findViewById(R.id.contact_list);
+        mContactRecyclerview = mListBinding.frameLayout.findViewById(R.id.contact_list);
         assert mContactRecyclerview != null;
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
