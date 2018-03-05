@@ -1,6 +1,7 @@
 package com.mvstar.edwinwu.lifemgr.ui.contact.list;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.mvstar.edwinwu.lifemgr.R;
 import com.mvstar.edwinwu.lifemgr.data.database.ContactEntry;
+import com.mvstar.edwinwu.lifemgr.databinding.ActivityContactListBinding;
+import com.mvstar.edwinwu.lifemgr.databinding.ContactListContentBinding;
 
 import java.util.Date;
 import java.util.List;
@@ -24,6 +27,8 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
 
     private List<ContactEntry> mContactList;
 
+    private ContactListContentBinding mListContentBinding;
+
     public ContactListAdapter(@NonNull Context context,
                               ContactListAdapterOnItemClickHandler clickHandler) {
         mContext = context;
@@ -32,7 +37,9 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.contact_list_content, parent, false);
+        mListContentBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.contact_list_content, parent, false);
+        View view = mListContentBinding.getRoot();
+        //View view = LayoutInflater.from(mContext).inflate(R.layout.contact_list_content, parent, false);
         view.setFocusable(true);
         return new ViewHolder(view);
     }
@@ -40,12 +47,12 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         ContactEntry contact = mContactList.get(position);
-        viewHolder.listContactTitle.setText(mContactList.get(position).getEmail());
-        viewHolder.listContactNamePhone.setText(mContactList.get(position).getNickName() + " / " +
-                mContactList.get(position).getMobileNumber());
-        viewHolder.listContactInfo.setText(mContactList.get(position).getInfo());
+        viewHolder.listContactTitle.setText(contact.getEmail());
+        viewHolder.listContactNamePhone.setText(contact.getNickName() + " / " +
+                                                contact.getMobileNumber());
+        viewHolder.listContactInfo.setText(contact.getInfo());
 
-        viewHolder.itemView.setTag(mContactList.get(position));
+        viewHolder.itemView.setTag(contact);
     }
 
     @Override
@@ -74,9 +81,9 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
 
         ViewHolder(View view) {
             super(view);
-            listContactTitle = view.findViewById(R.id.contact_list_title);
-            listContactNamePhone = view.findViewById(R.id.contact_list_nickname_phone);
-            listContactInfo = view.findViewById(R.id.contact_list_info);
+            listContactTitle = mListContentBinding.contactListTitle;//view.findViewById(R.id.contact_list_title);
+            listContactNamePhone = mListContentBinding.contactListNicknamePhone;//view.findViewById(R.id.contact_list_nickname_phone);
+            listContactInfo = mListContentBinding.contactListInfo;//view.findViewById(R.id.contact_list_info);
 
             view.setOnClickListener(this);
         }
