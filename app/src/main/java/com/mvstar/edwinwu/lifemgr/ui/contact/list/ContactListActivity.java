@@ -4,20 +4,18 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.mvstar.edwinwu.lifemgr.R;
 import com.mvstar.edwinwu.lifemgr.databinding.ActivityContactListBinding;
-import com.mvstar.edwinwu.lifemgr.databinding.ContactDetailBinding;
 import com.mvstar.edwinwu.lifemgr.ui.contact.detail.ContactDetailActivity;
 import com.mvstar.edwinwu.lifemgr.ui.contact.detail.ContactDetailFragment;
+import com.mvstar.edwinwu.lifemgr.utilities.InformActionResult;
 import com.mvstar.edwinwu.lifemgr.utilities.InjectorUtils;
 
 public class ContactListActivity extends AppCompatActivity implements
@@ -80,6 +78,20 @@ public class ContactListActivity extends AppCompatActivity implements
             mContactRecyclerview.smoothScrollToPosition(mPosition);
 
         });
+
+        mViewModel.getDeleteContactResult().observe(this, result -> {
+            if (result != null) {
+                if (result.status() == true) {
+                    InformActionResult.OKBySnackBar(findViewById(R.id.app_coordinator),
+                            "Delete Contact: succeed.");
+                } else {
+                    InformActionResult.ErrorBySnackBar(findViewById(R.id.app_coordinator),
+                            "Delete Contact: failed.",
+                            "Message Code: " + result.messageCode() + " " +
+                                    "Message: " + result.message());
+                }
+            }
+        });
     }
 
     @Override
@@ -122,5 +134,12 @@ public class ContactListActivity extends AppCompatActivity implements
 
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onContextMenuDelete(String email) {
+        if (email == null || email.isEmpty()) return;
+
+        mViewModel.delete(email);
     }
 }

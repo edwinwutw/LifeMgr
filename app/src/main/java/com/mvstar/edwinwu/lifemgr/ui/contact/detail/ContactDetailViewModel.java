@@ -41,16 +41,13 @@ class ContactDetailViewModel extends ViewModel {
     public void insert(String email, String nickname, String phone, String info) {
         final ContactEntry contactEntry = new ContactEntry(email, nickname, phone, info);
 
-//        Single.create(new SingleOnSubscribe<String>() {
-//            @Override
-//            public void subscribe(SingleEmitter<String> e) throws Exception {
-//                insertContact(contactEntry);
-//                e.onSuccess("Success");
-//            }
-//        });
         Single.create(emitter -> {
-            insertContact(contactEntry);
-            emitter.onSuccess("Success");
+            try {
+                insertContact(contactEntry);
+                emitter.onSuccess("Success");
+            } catch(Exception e) {
+                emitter.onError(e.getCause());
+            }
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -63,7 +60,7 @@ class ContactDetailViewModel extends ViewModel {
                         });
     }
 
-    public void insertContact(ContactEntry contactEntry) {
+    public void insertContact(ContactEntry contactEntry) throws Exception {
         mRepository.insertContact(contactEntry);
     }
 
@@ -71,21 +68,27 @@ class ContactDetailViewModel extends ViewModel {
         final ContactEntry contactEntry = new ContactEntry(email, nickname, phone, info);
 
         Single.create(emitter -> {
-            updateContact(contactEntry);
-            emitter.onSuccess("Success");
+            try {
+                updateContact(contactEntry);
+                emitter.onSuccess("Success");
+            } catch(Exception e) {
+                emitter.onError(e.getCause());
+            }
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         result -> {
-                            mSaveContactResultLiveData.setValue(SaveContactResult.create(true, "", ""));
+                            mSaveContactResultLiveData.setValue(SaveContactResult.create(
+                                    true, "", ""));
                         },
                         e -> {
-                            mSaveContactResultLiveData.setValue(SaveContactResult.create(false, e.getCause().toString(), e.getMessage()));
+                            mSaveContactResultLiveData.setValue(SaveContactResult.create(
+                                    false, "", e.getMessage()));
                         });
     }
 
-    public void updateContact(ContactEntry contactEntry) {
+    public void updateContact(ContactEntry contactEntry) throws Exception {
         mRepository.updateContact(contactEntry);
     }
 }

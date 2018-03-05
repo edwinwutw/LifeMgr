@@ -93,15 +93,19 @@ public class ContactRepository {
         return mContactDao.getContact(email);
     }
 
-    public void insertContact(ContactEntry contactEntry) {
+    public ContactEntry getContactImmediately(String email) {
+        return mContactDao.getContactImmediately(email);
+    }
+
+    public void insertContact(ContactEntry contactEntry) throws Exception {
         mContactDao.insertContact(contactEntry);
     }
 
-    public void updateContact(ContactEntry contactEntry) {
+    public void updateContact(ContactEntry contactEntry) throws Exception {
         mContactDao.updateContacts(contactEntry);
     }
 
-    public void deleteContact(String email) {
+    public void deleteContact(String email) throws Exception {
         mContactDao.deleteContact(email);
     }
 

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.mvstar.edwinwu.lifemgr.R;
 import com.mvstar.edwinwu.lifemgr.data.database.ContactEntry;
 import com.mvstar.edwinwu.lifemgr.databinding.ContactDetailBinding;
+import com.mvstar.edwinwu.lifemgr.utilities.InformActionResult;
 import com.mvstar.edwinwu.lifemgr.utilities.InjectorUtils;
 
 /**
@@ -73,7 +74,10 @@ public class ContactDetailFragment extends Fragment {
                     if (result.status() == true) {
                         getActivity().finish();
                     } else {
-                        informErrorBySnackBar(result.messageCode(), result.message());
+                        InformActionResult.ErrorBySnackBar(getActivity().findViewById(R.id.contact_detail_form),
+                                "Add/save contact failed.",
+                                "Message Code: " + result.messageCode() + " " +
+                                        "Message: " + result.message());
                     }
                 }
             }
@@ -122,13 +126,5 @@ public class ContactDetailFragment extends Fragment {
     void requestEmailFocus(String error) {
         mDetailBinding.email.setError(error);
         mDetailBinding.email.requestFocus();
-    }
-
-    public void informErrorBySnackBar(final String messageCode, final String message) {
-        Snackbar mySnackbar = Snackbar.make(getActivity().findViewById(R.id.contact_detail_form),
-                "add/save contact failed. \r\n" +
-                        "Message Code: " + messageCode + "\r\n" +
-                        "Message: " + message, Snackbar.LENGTH_SHORT);
-        mySnackbar.show();
     }
 }

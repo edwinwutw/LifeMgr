@@ -23,16 +23,18 @@ public interface ContactDao {
    @Query("SELECT * FROM contact WHERE email = :email")
    LiveData<ContactEntry> getContact(String email);
 
+    @Query("SELECT * FROM contact WHERE email = :email")
+    ContactEntry getContactImmediately(String email);
+
    @Insert(onConflict = OnConflictStrategy.FAIL)
    void insertContact(ContactEntry contactEntry);
 
    @Query("DELETE FROM contact WHERE email = :email")
    void deleteContact(String email);
 
-   @Update
+    @Delete
+    void deleteContacts(ContactEntry... contacts);
+
+    @Update
    void updateContacts(ContactEntry... contacts);
-
-   @Delete
-   void deleteContacts(ContactEntry... contacts);
-
 }

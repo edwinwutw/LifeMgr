@@ -4,7 +4,10 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -71,9 +74,11 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
      */
     public interface ContactListAdapterOnItemClickHandler {
         void onItemClick(String email);
+        void onContextMenuDelete(String email);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            View.OnCreateContextMenuListener{
 
         final TextView listContactTitle;
         final TextView listContactNamePhone;
@@ -86,6 +91,7 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
             listContactInfo = mListContentBinding.contactListInfo;//view.findViewById(R.id.contact_list_info);
 
             view.setOnClickListener(this);
+            view.setOnCreateContextMenuListener(this);
         }
 
         @Override
@@ -94,5 +100,33 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
             String email = mContactList.get(adapterPosition).getEmail();
             mClickHandler.onItemClick(email);
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            MenuItem Edit = menu.add(Menu.NONE, 1, 1, "Edit");
+            MenuItem Delete = menu.add(Menu.NONE, 2, 2, "Delete");
+            Edit.setOnMenuItemClickListener(onEditMenu);
+            Delete.setOnMenuItemClickListener(onEditMenu);
+        }
+
+        private final MenuItem.OnMenuItemClickListener onEditMenu = new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int adapterPosition = getAdapterPosition();
+                String email = mContactList.get(adapterPosition).getEmail();
+
+                switch (item.getItemId()) {
+                    case 1:
+                        mClickHandler.onItemClick(email);
+                        break;
+
+                    case 2:
+                        mClickHandler.onContextMenuDelete(email);
+
+                        break;
+                }
+                return true;
+            }
+        };
     }
 }
