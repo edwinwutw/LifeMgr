@@ -45,6 +45,7 @@ public class ContactListActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 Intent contactDetailIntent = new Intent(ContactListActivity.this, ContactDetailActivity.class);
+                contactDetailIntent.removeExtra(ContactDetailFragment.ARG_CONTACT_ID);
                 startActivity(contactDetailIntent);
             }
         });
@@ -72,7 +73,7 @@ public class ContactListActivity extends AppCompatActivity implements
         mViewModel = ViewModelProviders.of(this, factory).get(ContactListViewModel.class);
 
         mViewModel.getContactList().observe(this, contactList -> {
-            mContactAdapter.swapForecast(contactList);
+            mContactAdapter.swapData(contactList);
             if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
             mContactRecyclerview.smoothScrollToPosition(mPosition);
 

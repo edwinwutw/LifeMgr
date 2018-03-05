@@ -94,7 +94,11 @@ public class ContactRepository {
     }
 
     public void insertContact(ContactEntry contactEntry) {
-        mContactDao.InsertContact(contactEntry);
+        mContactDao.insertContact(contactEntry);
+    }
+
+    public void updateContact(ContactEntry contactEntry) {
+        mContactDao.updateContacts(contactEntry);
     }
 
     public void deleteContact(String email) {

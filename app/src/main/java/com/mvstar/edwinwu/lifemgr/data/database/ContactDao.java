@@ -24,14 +24,15 @@ public interface ContactDao {
    LiveData<ContactEntry> getContact(String email);
 
    @Insert(onConflict = OnConflictStrategy.FAIL)
-   void InsertContact(ContactEntry contactEntry);
+   void insertContact(ContactEntry contactEntry);
 
    @Query("DELETE FROM contact WHERE email = :email")
    void deleteContact(String email);
 
+   @Update
+   void updateContacts(ContactEntry... contacts);
+
    @Delete
    void deleteContacts(ContactEntry... contacts);
 
-   @Update
-   void updateUsers(ContactEntry... contacts);
 }

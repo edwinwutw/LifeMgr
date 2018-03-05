@@ -64,4 +64,8 @@ dependencies {
     // RxJava2
     implementation "io.reactivex.rxjava2:rxjava:$rxjava2_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+
+    // auto value
+    provided "com.google.auto.value:auto-value:$autovalue_version"
+    annotationProcessor "com.google.auto.value:auto-value:$autovalue_version"
 }

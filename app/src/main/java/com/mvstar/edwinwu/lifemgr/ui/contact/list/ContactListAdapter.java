@@ -40,8 +40,9 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         ContactEntry contact = mContactList.get(position);
-        //viewHolder.listContactAvatar.setImageDrawable(null);
         viewHolder.listContactTitle.setText(mContactList.get(position).getEmail());
+        viewHolder.listContactNamePhone.setText(mContactList.get(position).getNickName() + " / " +
+                mContactList.get(position).getMobileNumber());
         viewHolder.listContactInfo.setText(mContactList.get(position).getInfo());
 
         viewHolder.itemView.setTag(mContactList.get(position));
@@ -53,13 +54,9 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
         return mContactList.size();
     }
 
-    void swapForecast(final List<ContactEntry> newContactList) {
-        // If there was no contact data, then recreate all of the list
-        if (mContactList == null) {
-            mContactList = newContactList;
-            notifyDataSetChanged();
-        } else {
-        }
+    void swapData(final List<ContactEntry> newContactList) {
+        mContactList = newContactList;
+        notifyDataSetChanged();
     }
 
     /**
@@ -71,14 +68,14 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHol
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        final ImageView listContactAvatar;
         final TextView listContactTitle;
+        final TextView listContactNamePhone;
         final TextView listContactInfo;
 
         ViewHolder(View view) {
             super(view);
-            listContactAvatar = view.findViewById(R.id.contact_list_avatar);
             listContactTitle = view.findViewById(R.id.contact_list_title);
+            listContactNamePhone = view.findViewById(R.id.contact_list_nickname_phone);
             listContactInfo = view.findViewById(R.id.contact_list_info);
 
             view.setOnClickListener(this);

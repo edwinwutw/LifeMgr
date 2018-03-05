@@ -21,34 +21,35 @@
     android:background="?android:attr/selectableItemBackground"
     android:padding="@dimen/md_keylines">
 
-    <ImageView
-        android:id="@+id/contact_list_avatar"
-        android:layout_width="@dimen/avator_size"
-        android:layout_height="@dimen/avator_size"
-        android:scaleType="centerCrop"
-        tools:src="@drawable/a_avator" />
-
     <TextView
         android:id="@+id/contact_list_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/md_keylines"
-        android:layout_toRightOf="@+id/contact_list_avatar"
         tools:text="@string/item_title"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textSize="@dimen/article_subheading" />
 
     <TextView
-        android:id="@+id/contact_list_info"
+        android:id="@+id/contact_list_nickname_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/contact_list_title"
-        android:layout_marginLeft="@dimen/md_keylines"
-        android:layout_toRightOf="@+id/contact_list_avatar"
         android:textColor="@color/medium_grey"
         android:ellipsize="end"
         android:singleLine="true"
-        tools:text="@string/item_desc"
+        tools:text="@string/item_namephone"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="@dimen/list_body" />
+
+    <TextView
+        android:id="@+id/contact_list_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contact_list_nickname_phone"
+        android:textColor="@color/medium_grey"
+        android:ellipsize="end"
+        android:singleLine="true"
+        tools:text="@string/item_info"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textSize="@dimen/list_body" />
 </RelativeLayout>
