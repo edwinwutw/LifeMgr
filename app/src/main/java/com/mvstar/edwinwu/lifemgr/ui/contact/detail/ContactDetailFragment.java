@@ -51,7 +51,7 @@ public class ContactDetailFragment extends Fragment {
         mExistingContact = false;
         String email = "";
         if (getArguments().containsKey(ARG_CONTACT_ID)) {
-            email = getActivity().getIntent().getStringExtra(ARG_CONTACT_ID);
+            email = getArguments().getString(ARG_CONTACT_ID);
             // if email is valid email
             if (email != null) {
                 mExistingContact = true;
