@@ -72,6 +72,7 @@ public class ContactListActivity extends AppCompatActivity implements
         ContactListViewModelFactory factory = InjectorUtils.provideContactListViewModelFactory(this.getApplicationContext());
         mViewModel = ViewModelProviders.of(this, factory).get(ContactListViewModel.class);
 
+        // observe
         mViewModel.getContactList().observe(this, contactList -> {
             mContactAdapter.swapData(contactList);
             if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
@@ -82,13 +83,12 @@ public class ContactListActivity extends AppCompatActivity implements
         mViewModel.getDeleteContactResult().observe(this, result -> {
             if (result != null) {
                 if (result.status() == true) {
-                    InformActionResult.OKBySnackBar(findViewById(R.id.app_coordinator),
-                            "Delete Contact: succeed.");
+                    InformActionResult.BySnackBar(findViewById(R.id.app_coordinator),
+                            getString(R.string.delete_contact_ok));
                 } else {
-                    InformActionResult.ErrorBySnackBar(findViewById(R.id.app_coordinator),
-                            "Delete Contact: failed.",
-                            "Message Code: " + result.messageCode() + " " +
-                                    "Message: " + result.message());
+                    InformActionResult.BySnackBar(findViewById(R.id.app_coordinator),
+                            getString(R.string.delete_contact_fail), result.messageCode(),
+                            result.message());
                 }
             }
         });

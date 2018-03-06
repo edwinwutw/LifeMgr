@@ -18,7 +18,6 @@ package com.mvstar.edwinwu.lifemgr.utilities;
 
 import android.content.Context;
 
-import com.mvstar.edwinwu.lifemgr.AppExecutors;
 import com.mvstar.edwinwu.lifemgr.data.ContactRepository;
 import com.mvstar.edwinwu.lifemgr.data.database.ContactDatabase;
 import com.mvstar.edwinwu.lifemgr.data.network.ContactNetworkDataSource;
@@ -32,18 +31,14 @@ public class InjectorUtils {
 
     public static ContactRepository provideRepository(Context context) {
         ContactDatabase database = ContactDatabase.getInstance(context.getApplicationContext());
-        AppExecutors executors = AppExecutors.getInstance();
         ContactNetworkDataSource networkDataSource =
-                ContactNetworkDataSource.getInstance(context.getApplicationContext(), executors);
-        return ContactRepository.getInstance(database.contactDao(), networkDataSource, executors);
+                ContactNetworkDataSource.getInstance(context.getApplicationContext());
+        return ContactRepository.getInstance(database.contactDao(), networkDataSource);
     }
 
     public static ContactNetworkDataSource provideNetworkDataSource(Context context) {
-        // This call to provide repository is necessary if the app starts from a service - in this
-        // case the repository will not exist unless it is specifically created.
         provideRepository(context.getApplicationContext());
-        AppExecutors executors = AppExecutors.getInstance();
-        return ContactNetworkDataSource.getInstance(context.getApplicationContext(), executors);
+        return ContactNetworkDataSource.getInstance(context.getApplicationContext());
     }
 
     public static ContactDetailViewModelFactory provideDetailViewModelFactory(Context context, String email) {

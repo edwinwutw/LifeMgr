@@ -7,9 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
-import android.content.ClipData;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,24 +15,24 @@ import java.util.List;
  */
 @Dao
 public interface ContactDao {
-   @Query("SELECT * FROM contact")
-   LiveData<List<ContactEntry>> getContactList();
+    @Query("SELECT * FROM contact")
+    LiveData<List<ContactEntry>> getContactList();
 
-   @Query("SELECT * FROM contact WHERE email = :email")
-   LiveData<ContactEntry> getContact(String email);
+    @Query("SELECT * FROM contact WHERE email = :email")
+    LiveData<ContactEntry> getContact(String email);
 
     @Query("SELECT * FROM contact WHERE email = :email")
     ContactEntry getContactImmediately(String email);
 
-   @Insert(onConflict = OnConflictStrategy.FAIL)
-   void insertContact(ContactEntry contactEntry);
+    @Insert(onConflict = OnConflictStrategy.FAIL)
+    void insertContact(ContactEntry contactEntry);
 
-   @Query("DELETE FROM contact WHERE email = :email")
-   void deleteContact(String email);
+    @Query("DELETE FROM contact WHERE email = :email")
+    void deleteContact(String email);
 
     @Delete
     void deleteContacts(ContactEntry... contacts);
 
     @Update
-   void updateContacts(ContactEntry... contacts);
+    void updateContacts(ContactEntry... contacts);
 }

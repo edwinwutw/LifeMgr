@@ -3,15 +3,11 @@ package com.mvstar.edwinwu.lifemgr.ui.contact.detail;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-
 
 import com.mvstar.edwinwu.lifemgr.R;
 import com.mvstar.edwinwu.lifemgr.ui.contact.list.ContactListActivity;

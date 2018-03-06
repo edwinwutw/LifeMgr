@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.mvstar.edwinwu.lifemgr.data.ContactRepository;
 import com.mvstar.edwinwu.lifemgr.data.database.ContactEntry;
+import com.mvstar.edwinwu.lifemgr.utilities.ViewModelActionResult;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import io.reactivex.schedulers.Schedulers;
 class ContactListViewModel extends ViewModel {
     private final ContactRepository mRepository;
     private final LiveData<List<ContactEntry>> mContactList;
-    private final MutableLiveData<DeleteContactResult> mDeleteContactResultLiveData = new MutableLiveData<>();
+    private final MutableLiveData<ViewModelActionResult> mDeleteContactResultLiveData = new MutableLiveData<>();
 
     public ContactListViewModel(ContactRepository repository) {
         mRepository = repository;
@@ -28,7 +29,7 @@ class ContactListViewModel extends ViewModel {
         return mContactList;
     }
 
-    public LiveData<DeleteContactResult> getDeleteContactResult() {
+    public LiveData<ViewModelActionResult> getDeleteContactResult() {
         return mDeleteContactResultLiveData;
     }
 
@@ -45,11 +46,11 @@ class ContactListViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         result -> {
-                            mDeleteContactResultLiveData.setValue(DeleteContactResult.create(
+                            mDeleteContactResultLiveData.setValue(ViewModelActionResult.create(
                                     true, "", ""));
                         },
                         e -> {
-                            mDeleteContactResultLiveData.setValue(DeleteContactResult.create(
+                            mDeleteContactResultLiveData.setValue(ViewModelActionResult.create(
                                     false, "", e.getMessage()));
                         });
     }

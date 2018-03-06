@@ -15,15 +15,9 @@
  */
 package com.mvstar.edwinwu.lifemgr.data.network;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
-import com.mvstar.edwinwu.lifemgr.AppExecutors;
-
-/**
 /**
  * Provides an API for doing all operations with the server data
  */
@@ -33,21 +27,19 @@ public class ContactNetworkDataSource {
     private static final Object LOCK = new Object();
     private static ContactNetworkDataSource sInstance;
     private final Context mContext;
-    private final AppExecutors mExecutors;
 
-    private ContactNetworkDataSource(Context context, AppExecutors executors) {
+    private ContactNetworkDataSource(Context context) {
         mContext = context;
-        mExecutors = executors;
     }
 
     /**
      * Get the singleton for this class
      */
-    public static ContactNetworkDataSource getInstance(Context context, AppExecutors executors) {
+    public static ContactNetworkDataSource getInstance(Context context) {
         Log.d(LOG_TAG, "Getting the network data source");
         if (sInstance == null) {
             synchronized (LOCK) {
-                sInstance = new ContactNetworkDataSource(context.getApplicationContext(), executors);
+                sInstance = new ContactNetworkDataSource(context.getApplicationContext());
                 Log.d(LOG_TAG, "Made new network data source");
             }
         }

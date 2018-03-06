@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,6 +17,7 @@ import com.mvstar.edwinwu.lifemgr.data.database.ContactEntry;
 import com.mvstar.edwinwu.lifemgr.databinding.ContactDetailBinding;
 import com.mvstar.edwinwu.lifemgr.utilities.InformActionResult;
 import com.mvstar.edwinwu.lifemgr.utilities.InjectorUtils;
+import com.mvstar.edwinwu.lifemgr.utilities.ViewModelActionResult;
 
 /**
  * A fragment representing a single Contact detail screen.
@@ -49,6 +49,7 @@ public class ContactDetailFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // check it is new contact or modify contacts
         mExistingContact = false;
         String email = "";
         if (getArguments().containsKey(ARG_CONTACT_ID)) {
@@ -64,20 +65,21 @@ public class ContactDetailFragment extends Fragment {
         ContactDetailViewModelFactory factory = InjectorUtils.provideDetailViewModelFactory(getActivity().getApplicationContext(), email);
         mViewModel = ViewModelProviders.of(this, factory).get(ContactDetailViewModel.class);
 
+
+        // observe
         mViewModel.getContact().observe(this, contactEntry -> {
             if (contactEntry != null) bindContactToUI(contactEntry);
         });
-        mViewModel.getSaveContactResult().observe(this, new Observer<SaveContactResult>() {
+        mViewModel.getSaveContactResult().observe(this, new Observer<ViewModelActionResult>() {
             @Override
-            public void onChanged(@Nullable SaveContactResult result) {
+            public void onChanged(@Nullable ViewModelActionResult result) {
                 if (result != null) {
                     if (result.status() == true) {
                         getActivity().finish();
                     } else {
-                        InformActionResult.ErrorBySnackBar(getActivity().findViewById(R.id.contact_detail_form),
-                                "Add/save contact failed.",
-                                "Message Code: " + result.messageCode() + " " +
-                                        "Message: " + result.message());
+                        InformActionResult.BySnackBar(getActivity().findViewById(R.id.contact_detail_form),
+                                getString(R.string.save_contact_fail), result.messageCode(),
+                                result.message());
                     }
                 }
             }

@@ -3,22 +3,19 @@ package com.mvstar.edwinwu.lifemgr.ui.contact.detail;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.util.Log;
 
-import com.google.auto.value.AutoValue;
 import com.mvstar.edwinwu.lifemgr.data.ContactRepository;
 import com.mvstar.edwinwu.lifemgr.data.database.ContactEntry;
+import com.mvstar.edwinwu.lifemgr.utilities.ViewModelActionResult;
 
 import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
-import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 class ContactDetailViewModel extends ViewModel {
 
     private final LiveData<ContactEntry> mContact;
-    private final MutableLiveData<SaveContactResult> mSaveContactResultLiveData = new MutableLiveData<>();
+    private final MutableLiveData<ViewModelActionResult> mSaveContactResultLiveData = new MutableLiveData<>();
 
 
     private final String mEmail;
@@ -34,7 +31,7 @@ class ContactDetailViewModel extends ViewModel {
         return mContact;
     }
 
-    public LiveData<SaveContactResult> getSaveContactResult() {
+    public LiveData<ViewModelActionResult> getSaveContactResult() {
         return mSaveContactResultLiveData;
     }
 
@@ -53,10 +50,10 @@ class ContactDetailViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         result -> {
-                            mSaveContactResultLiveData.setValue(SaveContactResult.create(true, "", ""));
+                            mSaveContactResultLiveData.setValue(ViewModelActionResult.create(true, "", ""));
                         },
                         e -> {
-                            mSaveContactResultLiveData.setValue(SaveContactResult.create(false, e.getCause().toString(), e.getMessage()));
+                            mSaveContactResultLiveData.setValue(ViewModelActionResult.create(false, e.getCause().toString(), e.getMessage()));
                         });
     }
 
@@ -79,11 +76,11 @@ class ContactDetailViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         result -> {
-                            mSaveContactResultLiveData.setValue(SaveContactResult.create(
+                            mSaveContactResultLiveData.setValue(ViewModelActionResult.create(
                                     true, "", ""));
                         },
                         e -> {
-                            mSaveContactResultLiveData.setValue(SaveContactResult.create(
+                            mSaveContactResultLiveData.setValue(ViewModelActionResult.create(
                                     false, "", e.getMessage()));
                         });
     }
