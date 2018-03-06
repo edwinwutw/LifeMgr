@@ -39,12 +39,8 @@ class ContactDetailViewModel extends ViewModel {
         final ContactEntry contactEntry = new ContactEntry(email, nickname, phone, info);
 
         Single.create(emitter -> {
-            try {
-                insertContact(contactEntry);
-                emitter.onSuccess("Success");
-            } catch(Exception e) {
-                emitter.onError(e.getCause());
-            }
+            insertContact(contactEntry);
+            emitter.onSuccess("Success");
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -53,7 +49,7 @@ class ContactDetailViewModel extends ViewModel {
                             mSaveContactResultLiveData.setValue(ViewModelActionResult.create(true, "", ""));
                         },
                         e -> {
-                            mSaveContactResultLiveData.setValue(ViewModelActionResult.create(false, e.getCause().toString(), e.getMessage()));
+                            mSaveContactResultLiveData.setValue(ViewModelActionResult.create(false, "", e.getMessage()));
                         });
     }
 

@@ -19,13 +19,13 @@ public class InformActionResult {
         Snackbar mySnackbar = Snackbar.make(parent, messageTitle + ":   " +
                         "Message Code[" + messageCode + "]," +
                         "Message[" + message + "]"
-                , Snackbar.LENGTH_SHORT);
+                , Snackbar.LENGTH_INDEFINITE);
         mySnackbar.show();
     }
 
     public static void BySnackBar(View parent, final String messageTitle, final String description) {
         Snackbar mySnackbar = Snackbar.make(parent, messageTitle + ":   " + description
-                , Snackbar.LENGTH_SHORT);
+                , Snackbar.LENGTH_INDEFINITE);
         mySnackbar.show();
     }
 

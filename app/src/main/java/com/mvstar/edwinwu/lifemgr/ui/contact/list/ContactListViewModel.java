@@ -35,12 +35,8 @@ class ContactListViewModel extends ViewModel {
 
     public void delete(String email) {
         Single.create(emitter -> {
-            try {
-                deleteContact(email);
-                emitter.onSuccess("Success");
-            } catch(Exception e) {
-                emitter.onError(e.getCause());
-            }
+            deleteContact(email);
+            emitter.onSuccess("Success");
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
