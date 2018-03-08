@@ -33,30 +33,22 @@ class ContactListViewModel extends ViewModel {
         return mDeleteContactResultLiveData;
     }
 
-    public void delete(String email) {
+    public void deleteContact(String email) {
         Single.create(emitter -> {
-            deleteContact(email);
+            ContactEntry contact = mRepository.getContactImmediately(email);
+            if (contact == null)
+                throw new  IllegalArgumentException(new Throwable("No such contact!"));
+
+            mRepository.deleteContact(email);
             emitter.onSuccess("Success");
         })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        result -> {
-                            mDeleteContactResultLiveData.setValue(ViewModelActionResult.create(
-                                    true, "", ""));
-                        },
-                        e -> {
-                            mDeleteContactResultLiveData.setValue(ViewModelActionResult.create(
-                                    false, "", e.getMessage()));
-                        });
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                result -> mDeleteContactResultLiveData.setValue(
+                        ViewModelActionResult.create(true, "", "")),
+                e -> mDeleteContactResultLiveData.setValue(
+                        ViewModelActionResult.create(false, "", e.getMessage()))
+            );
     }
-
-    public void deleteContact(String email) throws Exception {
-        ContactEntry contact = mRepository.getContactImmediately(email);
-        if (contact == null)
-            throw new Exception(new Throwable("No such contact!"));
-
-        mRepository.deleteContact(email);
-    }
-
 }

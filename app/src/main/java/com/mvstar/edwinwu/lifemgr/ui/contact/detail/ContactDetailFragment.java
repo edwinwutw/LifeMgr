@@ -120,9 +120,9 @@ public class ContactDetailFragment extends Fragment {
             return;
         }
         if (mExistingContact)
-            mViewModel.update(email, nickname, phone, info);
+            mViewModel.updateContact(email, nickname, phone, info);
         else
-            mViewModel.insert(email, nickname, phone, info);
+            mViewModel.insertContact(email, nickname, phone, info);
     }
 
     void requestEmailFocus(String error) {

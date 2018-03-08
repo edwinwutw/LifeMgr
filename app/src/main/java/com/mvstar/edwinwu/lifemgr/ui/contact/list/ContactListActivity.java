@@ -140,6 +140,6 @@ public class ContactListActivity extends AppCompatActivity implements
     public void onContextMenuDelete(String email) {
         if (email == null || email.isEmpty()) return;
 
-        mViewModel.delete(email);
+        mViewModel.deleteContact(email);
     }
 }

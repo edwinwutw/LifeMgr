@@ -35,53 +35,37 @@ class ContactDetailViewModel extends ViewModel {
         return mSaveContactResultLiveData;
     }
 
-    public void insert(String email, String nickname, String phone, String info) {
+    public void insertContact(String email, String nickname, String phone, String info) {
         final ContactEntry contactEntry = new ContactEntry(email, nickname, phone, info);
 
         Single.create(emitter -> {
-            insertContact(contactEntry);
+            mRepository.insertContact(contactEntry);
             emitter.onSuccess("Success");
         })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        result -> {
-                            mSaveContactResultLiveData.setValue(ViewModelActionResult.create(true, "", ""));
-                        },
-                        e -> {
-                            mSaveContactResultLiveData.setValue(ViewModelActionResult.create(false, "", e.getMessage()));
-                        });
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                result -> mSaveContactResultLiveData.setValue(
+                        ViewModelActionResult.create(true, "", "")),
+                e -> mSaveContactResultLiveData.setValue(
+                        ViewModelActionResult.create(false, "", e.getMessage()))
+            );
     }
 
-    public void insertContact(ContactEntry contactEntry) throws Exception {
-        mRepository.insertContact(contactEntry);
-    }
-
-    public void update(String email, String nickname, String phone, String info) {
+    public void updateContact(String email, String nickname, String phone, String info) {
         final ContactEntry contactEntry = new ContactEntry(email, nickname, phone, info);
 
         Single.create(emitter -> {
-            try {
-                updateContact(contactEntry);
-                emitter.onSuccess("Success");
-            } catch(Exception e) {
-                emitter.onError(e.getCause());
-            }
+            mRepository.updateContact(contactEntry);
+            emitter.onSuccess("Success");
         })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        result -> {
-                            mSaveContactResultLiveData.setValue(ViewModelActionResult.create(
-                                    true, "", ""));
-                        },
-                        e -> {
-                            mSaveContactResultLiveData.setValue(ViewModelActionResult.create(
-                                    false, "", e.getMessage()));
-                        });
-    }
-
-    public void updateContact(ContactEntry contactEntry) throws Exception {
-        mRepository.updateContact(contactEntry);
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                result -> mSaveContactResultLiveData.setValue(
+                        ViewModelActionResult.create(true, "", "")),
+                e -> mSaveContactResultLiveData.setValue(
+                        ViewModelActionResult.create(false, "", e.getMessage()))
+            );
     }
 }

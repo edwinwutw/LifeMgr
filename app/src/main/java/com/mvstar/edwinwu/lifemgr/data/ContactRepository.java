@@ -21,7 +21,6 @@ public class ContactRepository {
     private static ContactRepository sInstance;
     private final ContactDao mContactDao;
     private final ContactNetworkDataSource mContactNetworkDataSource;
-    private boolean mInitialized = false;
 
     private ContactRepository(ContactDao contactDao,
                               ContactNetworkDataSource contactNetworkDataSource) {
@@ -49,7 +48,7 @@ public class ContactRepository {
         return mContactDao.getContact(email);
     }
 
-    public ContactEntry getContactImmediately(String email) {
+    public ContactEntry getContactImmediately(String email) throws Exception {
         return mContactDao.getContactImmediately(email);
     }
 

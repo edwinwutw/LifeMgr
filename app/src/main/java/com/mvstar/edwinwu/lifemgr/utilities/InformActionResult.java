@@ -17,7 +17,7 @@ public class InformActionResult {
     public static void BySnackBar(View parent, final String messageTitle, final String messageCode,
                                   final String message) {
         Snackbar mySnackbar = Snackbar.make(parent, messageTitle + ":   " +
-                        "Message Code[" + messageCode + "]," +
+                        "Message Code[" + messageCode + "], " +
                         "Message[" + message + "]"
                 , Snackbar.LENGTH_INDEFINITE);
         mySnackbar.show();

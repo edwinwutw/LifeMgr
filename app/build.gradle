@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion _compileSdkVersion
     defaultConfig {
         applicationId "com.mvstar.edwinwu.lifemgr"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -36,21 +36,9 @@ dependencies {
     // support library
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:support-v4:$support_version"
-
-    //implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
-
-    // material design
+    implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
     implementation "com.android.support:design:$support_version"
     implementation "com.android.support:recyclerview-v7:$support_version"
-
-    //implementation "com.android.support:cardview-v7:$support_version"
-
-    //implementation "com.android.support:preference-v7:$support_version"
-
-    // unit test
-    testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "com.android.support.test:runner:$support_test_version"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$test_espresso_version"
 
     // architecture component
     implementation "android.arch.lifecycle:runtime:$arch_version"
@@ -66,6 +54,23 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
 
     // auto value
-    provided "com.google.auto.value:auto-value:$autovalue_version"
+    compileOnly "com.google.auto.value:auto-value:$autovalue_version"
     annotationProcessor "com.google.auto.value:auto-value:$autovalue_version"
+
+    // Android Testing Support Library's runner and rules
+    androidTestImplementation "com.android.support.test:runner:$runnerVersion"
+    androidTestImplementation "com.android.support.test:rules:$rulesVersion"
+    // unit test
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testImplementation "org.powermock:powermock-module-junit4:$powerMockito"
+    testImplementation "org.powermock:powermock-api-mockito2:$powerMockito"
+    // Espresso ui testing
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
+    // Robolectric
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    // guava is needed for string operations
+    implementation "com.google.guava:guava:$guava_version"
 }
